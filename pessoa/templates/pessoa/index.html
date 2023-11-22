@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Usuários</title>
+</head>
+<body>
+
+  <h1>Lista de Usuários</h1>
+  
+  <ul>
+    {% for pessoa in pessoas %}
+    <li>
+        <a href="{{pessoa.id}}">{{pessoa.nome}}</a>
+    </li>
+        {% endfor %}
+  </ul>
+</body>
+</html>
