@@ -17,10 +17,32 @@ def utilizador_detalhes(request, pk):
 
 class PessoaView(APIView):
     def get(self, request):
-        """
-        Retorna pessoas da base de dados
-        """
         pessoas = Pessoa.objects.all()
-        serializer = PessoaSerializer(
-            pessoas, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        serializer = PessoaSerializer(pessoas, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        serilizer = PessoaSerializer(data=request.data)
+        if serilizer.is_valid():
+            serilizer.save()
+            return Response(serilizer.data)
+        return Response(serilizer.errors)
+
+class PessoaDetalhesView(APIView):
+    def get(self, request, pk):
+        pessoa = Pessoa.objects.get(pk=pk)
+        serializer = PessoaSerializer(pessoa)
+        return Response(serializer.data)
+    
+    def put(self, request, pk):
+        pessoa = Pessoa.objects.get(pk=pk)
+        serilizer = PessoaSerializer(pessoa, data=request.data)
+        if serilizer.is_valid():
+            serilizer.save()
+            return Response(serilizer.data)
+        return Response(serilizer.errors)
+    
+    def delete(sel, request, pk):
+        pessoa = Pessoa.objects.get(pk=pk)
+        pessoa.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
